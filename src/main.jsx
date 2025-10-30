@@ -15,7 +15,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
-            <SpeedInsights />
             <Navbar/>
             <ScrollToHash/>
             <Routes>
