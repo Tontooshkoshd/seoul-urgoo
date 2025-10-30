@@ -265,7 +265,7 @@ export function About() {
 
                     <div className="project-grid">
                         <div className="project-card">
-                            <img src="/projects/hcc.jpg" alt="HCC Himchan Center" loading="lazy" decoding="async" fetchPriority="low" />
+                            <img src="/horenc.webp" alt="HCC Himchan Center" loading="lazy" decoding="async" fetchPriority="low" />
                             <div className="project-body">
                                 <h4>HCC Himchan Center</h4>
                                 <p>Эмнэлэг болон үйлчилгээний зориулалттай барилга</p>
