@@ -1,0 +1,781 @@
+@import "tailwindcss";
+
+
+/* ===== ROOT SETTINGS ===== */
+:root {
+    --header-h: 72px;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --about-pad-y: clamp(56px, 8vh, 96px);   /* секц бүрийн дээд/доод зай */
+    --about-gap: clamp(20px, 3vw, 36px);     /* текст ↔ зураг хоорондын зай */
+    --about-title-mb: 1.2rem;                /* гарчиг доорх зай */
+    --about-list-gap: .6rem;
+}
+body {
+    font-family: var(--font-body);
+    color: #0C6B73;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    letter-spacing: 0.01em;
+}
+p, li, a, span, button {
+    font-family: var(--font-body);
+}
+html, body {
+    overflow-x: hidden;
+    background: #fff;
+    color: #0C6B73;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
+}
+    html { font-size: 16px; }
+    @media (min-width: 1280px){ html { font-size: 17px; } }
+    @media (min-width: 1536px){ html { font-size: 18px; } }
+
+
+
+/* GSAP snap-тэй зөрчилдөхөөс сэргийлж desktop дээр CSS smooth-г унтраана */
+@media (min-width:1024px){
+    html { scroll-behavior:smooth;
+}
+
+/* scroll-margin-top — anchor холбоос дээр navbar дарагдахгүй байх */
+section { scroll-margin-top: var(--header-h); }
+
+/* ===== NAVBAR ===== */
+header {
+    @apply fixed top-0 left-0 w-full z-50 flex items-center justify-center transition-all duration-300;
+    min-height: var(--header-h);
+    background-color: white;
+}
+header nav {
+    @apply container mx-auto flex justify-between items-center px-5 2xl:px-0;
+}
+
+header.nav-collapsed {
+    background: rgba(255,255,255,.5);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+
+.nav-links {
+    @apply hidden md:flex items-center gap-8 transition-opacity duration-300;
+}
+.nav-links a {
+    @apply text-[#0C6B73] opacity-90 font-medium hover:text-[#D89B1C] transition-colors;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+.hero-bg {
+    background-size: cover;
+    background-position: center;
+    transform-origin: center;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .45), rgba(0, 0, 0, .35));
+    z-index: 1;
+}
+.hero .hero-copy { position: relative; z-index: 2; }
+
+/* ===== PANELS ===== */
+@media (min-width:1024px){
+    .panel:not(.hero){
+        min-height: calc(100svh - var(--header-h)); /* navbar өндөр хассан */
+        display: grid;
+        align-items: center;
+    }
+}
+    .hero h1{
+
+    }
+
+.section { padding: 0;
+    overflow: visible;
+}
+.section > .container { padding-block: clamp(32px, 6vw, 64px); }
+
+.panel img {
+    max-height: 60svh;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+/* ===== TEXT STYLES ===== */
+.h1 { font-size: clamp(24px, 4.5vw, 48px); line-height: 1.1; }
+.h2 { font-size: clamp(20px, 3.8vw, 36px); line-height: 1.15; }
+.lead { font-size: clamp(15px, 2.8vw, 18px); line-height: 1.6; }
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+    @apply rounded-xl bg-[#D89B1C] text-white px-5 py-2.5 text-base hover:opacity-90 transition;
+}
+.btn-ghost {
+    @apply rounded-xl border border-[#D89B1C] text-[#D89B1C] px-5 py-2.5 text-base hover:bg-[#D89B1C] hover:text-white transition;
+}
+
+/* ===== HEADLINE ANIMATION ===== */
+.headline-underline::after {
+    content:"";
+    display:block;
+    height:4px;
+    width:0;
+    background:#D89B1C;
+    margin-top:12px;
+    border-radius:9999px;
+    animation:underline-grow .8s ease forwards;
+    animation-delay:.55s;
+}
+@keyframes underline-grow { to { width:84px; } }
+/* Desktop nav link hover: underline grow + color/weight */
+/* Desktop nav link hover — underline grow + fade-in */
+.nav-ink {
+    position: relative;
+    font-weight: 500;
+    color: #0C6B73;
+    padding-bottom: 4px;
+    transition: color 0.25s ease, font-weight 0.25s ease;
+}
+
+.nav-ink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: #D89B1C;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    border-radius: 9999px;
+    opacity: 0.8;
+}
+
+.nav-ink:hover,
+.nav-ink:focus-visible {
+    color: #D89B1C;
+    font-weight: 600;
+}
+
+.nav-ink:hover::after,
+.nav-ink:focus-visible::after {
+    transform: scaleX(1);
+}
+
+#about-4 img {
+    display: block;
+    width: auto;
+    object-fit: cover;
+    position: absolute;
+}
+
+
+.about-block img {
+    transition: transform 0.5s ease;
+}
+.about-block img:hover {
+    transform: scale(1.03);
+}
+.about4-shine {
+    background: linear-gradient(
+            120deg,
+            #ffffff 0%,
+            #f5d374 25%,
+            #fff7d1 50%,
+            #f5d374 75%,
+            #ffffff 100%
+    );
+    background-size: 300% 100%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes shineMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+    html, body {
+        scroll-behavior: auto;
+        overscroll-behavior: none;
+        background: #fff;
+        color: #0C6B73;
+    }
+}
+    .fade-up {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease-out;
+    }
+    .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+.about5-bg {
+    background-size: cover;
+    background-position: center;
+    transform-origin: center;
+    animation: about4-zoom 18s ease-in-out forwards;
+    filter: brightness(1.05);
+}
+@keyframes about5-zoom {
+    0%   { transform: scale(1) translateY(0); filter: brightness(0.8); opacity: 0; }
+    100% { transform: scale(1.15) translateY(3%); filter: brightness(1); opacity: 1; }
+}
+
+
+/* Place these near the bottom of index.css */
+/* Unified About layout */
+/* Base section */
+/* NOTE: ensure CSS braces above are balanced; fixed the earlier @media block too. */
+
+/* --- FIX: desktop scroll-behavior and close missing brace --- */
+@media (min-width:1024px){
+    html { scroll-behavior: auto; }
+}
+
+/* about unified */
+/* Өмнө: gap: 5rem; padding: 6rem 2.5rem; */
+/* --- RESET: өмнөх absolute pin-үүдийг унтраах --- */
+.about-section .about-image {
+    position: static !important;
+    inset: auto !important;
+    right: auto !important;
+    left: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible;
+}
+
+/* --- Шинэ grid layout --- */
+.about-section{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(520px, 0.95fr) minmax(560px, 1.05fr); /* зураг тал арай том */
+    align-items: center;
+    gap: clamp(20px, 3vw, 36px);
+    padding: clamp(56px, 8vh, 96px) clamp(20px, 5vw, 64px); /* талын padding бага зэрэг */
+
+
+
+
+}
+
+/* Зүүн талын текст — зүүнээс шууд эхэлнэ */
+.about-section .about-text{
+    max-width: 720px;
+    margin: 0;
+    text-align: left;
+    padding: 0; /* өмнөх padding-уудыг цэвэрлэв */
+}
+
+/* Баруун талын зураг — БАГАНЫНХАА ТӨВД яг сууна */
+.about-section .about-image{
+    justify-self: center;   /* ⬅️ төвд */
+    align-self: center;     /* ⬅️ босоо төв */
+}
+
+/* Зургийн хэмжээ/харалт */
+.about-section .about-image img{
+    width: min(820px, 92%);          /* баганынхаа 92% орчим */
+    height: min(56vh, 560px);        /* босоо өндөр */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 20px;             /* хүсвэл 0 болгоно */
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,.18);
+    transform: none;
+    transition: transform .5s ease;
+}
+.about-section .about-image img:hover{ transform: scale(1.02); }
+
+/* Mobile: нэг багана */
+@media (max-width: 768px){
+    .about-section{
+        grid-template-columns: 1fr;
+        padding: 48px 20px;
+    }
+    .about-section .about-image img{
+        width: 100%;
+        height: 320px;
+        border-radius: 16px;
+    }
+}
+
+
+/* alternate dark variant */
+.about-section.about-alt{ background-image: linear-gradient(to bottom right, #0A3A3F, #0C6B73); color: #fff; }
+.about-section.about-alt .about-text p,
+.about-section.about-alt .about-text li{ color: rgba(255,255,255,.9); }
+
+/* Keep existing about4-shine and about5-bg animations; minor fix: .about5-bg is now used in About.jsx */
+.about-heading {
+    @apply text-4xl md:text-5xl font-bold mb-6;
+}
+
+.about-heading-gold {
+    @apply text-4xl md:text-5xl font-bold mb-6;
+    color: #F8D77D;
+}
+/* Зураг бүрэн дүүргэж, шулуун булан, сүүдэр харагдуулах */
+.about-section .about-image {
+    position: relative;
+    overflow: visible;             /* сүүдэр дарагдахгүй */
+    /* option: aspect-ratio: 16/9;  image-ийг тогтмол харьцаатай болгох бол нээгээрэй */
+}
+
+.about-section .about-image img{
+    width: 100%;
+    height: 60vh;                  /* эсвэл 50vh / 520px гэх мэт */
+    object-fit: cover;
+    object-position: center;       /* фокус — төв (дараах modifier-уудаар өөрчилнө) */
+    border-radius: 2;   /* Tailwind-ийн rounded-ыг дарна */
+    box-shadow: 0 25px 60px -10px rgba(0,0,0,0.35);
+    display: block;
+    transition: transform .6s ease, box-shadow .6s ease;
+}
+
+.about-section .about-image img:hover{
+    transform: scale(1.03);
+    box-shadow: 0 35px 70px -10px rgba(0,0,0,0.45);
+}
+/* ==== Unit models cards ==== */
+.unit-models {
+    padding: 6rem 2.5rem;
+    background: #f8fbfc;
+    font-size: 15px; /* base бага зэрэг өсгөсөн */
+}
+
+.unit-title {
+    font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+    font-weight: 700;
+    color: #0C6B73;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.8rem;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+.unit-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 35px -10px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px -10px rgba(0,0,0,0.15);
+}
+
+.unit-image {
+    width: 100%;
+    height: 200px; /* жаахан намсгасан */
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.unit-body {
+    padding: 1.2rem 1.4rem;
+    text-align: left;
+}
+
+.unit-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0C6B73;
+    margin-bottom: .2rem;
+}
+
+.unit-size {
+    font-size: 20px; /* 10px → 0.9rem болголоо */
+    color: #D89B1C;
+    font-weight: 600;
+    margin-bottom: .6rem;
+}
+
+.unit-list {
+    list-style: disc;
+    padding-left: 1rem;
+    font-size: 18px; /* жижиг гэхдээ уншигдахуйц */
+    color: #0C6B73;
+    opacity: .9;
+    display: grid;
+    gap: .2rem;
+}
+
+/* Hover animation for image */
+.unit-card:hover .unit-image {
+    transform: scale(1.05);
+    transition: transform .5s ease;
+}
+
+.about-company {
+    padding: 15rem 2rem;
+    background: white;
+    color: #0C6B73;
+}
+.about-company p{
+    font-size: clamp(1.1rem, 1.4vw + 0.5rem, 1.45rem);
+    line-height: 1.8;
+    opacity: 0.92;
+    text-align: justify;
+    max-width: 65ch;
+    margin-inline: auto;
+}
+
+.about-company .container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.aboutco-title {
+    font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #0C6B73;
+}
+
+.aboutco-text {
+    font-size: 22px;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.aboutco-subtitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #D89B1C;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.35s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 45px -12px rgba(0,0,0,0.18);
+}
+
+.project-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.project-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.project-body h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+
+/* === ABOUT-4 SECTION FIX === */
+#about-4 {
+    position: relative;
+    color: #fff; /* бүх текстийг цагаан болгоно */
+    scroll-margin-top: 0;                 /* anchor offset-ийг болиулна */
+    margin-top: calc(-1 * var(--header-h)); /* секцийг дээш татна (фонд хүрнэ) */
+    padding-top: var(--header-h);           /* контентыг header-тэй мөргөлдүүлэхгүй */
+}
+
+#about-4 .about4-title {
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* текстийг тодруулах */
+}
+
+#about-4 .about4-text {
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+}
+
+/* CONTACT BOX */
+#about-4 .contact-box {
+    margin-top: 3rem;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 2rem 3rem;
+    border-radius: 1.5rem;
+    color: #fff;
+    box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255,255,255,0.25);
+    animation: fadeUp 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#about-4 .contact-box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#about-4 .contact-box h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #F8D77D;
+    margin-bottom: 0.75rem;
+}
+
+#about-4 .contact-box p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+#about-4 .contact-box a {
+    color: #fff;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color .3s ease;
+}
+
+#about-4 .contact-box a:hover {
+    color: #F8D77D;
+}
+
+/* Animation */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Make sure the section can anchor absolute children */
+#about-4 { position: relative; }
+
+/* bottom bar pinned to the very bottom edge */
+.about4-bottombar {
+    position: absolute;                     /* ⬅️ absolute → fixed */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 14px clamp(12px,3vw,24px) calc(14px + env(safe-area-inset-bottom));
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.18);
+    z-index: 9999;                       /* ⬅️ бүх зүйлээс дээр */
+}
+
+
+
+.about4-bottombar .row{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;                    /* нэг эгнээ, эвтэйхэн wrap */
+    gap: clamp(8px, 2vw, 24px);
+    color: #fff;
+    font-weight: 600;
+}
+
+.about4-bottombar .label{
+    color: #F8D77D;                             /* алтлаг акцент */
+    margin-right: 4px;
+}
+
+.about4-bottombar a{
+    color: #fff;
+    text-decoration: none;
+    transition: color .2s ease, opacity .2s ease;
+    opacity: .95;
+}
+.about4-bottombar a:hover{
+    color: #F8D77D;
+    opacity: 1;
+}
+
+/* жижиг дэлгэц дээр текст багтахгүй бол бага зэрэг жижгэрнэ */
+@media (max-width: 480px){
+    .about4-bottombar .row{ font-size: 0.95rem; }
+}
+
+
+.about-fade-text {
+    opacity: 0;
+    transform: translateY(55px) scale(0.99);
+    transition:
+            opacity 0.55s cubic-bezier(0.33, 1, 0.68, 1),
+            transform 0.55s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: opacity, transform;
+}
+.about-fade-text p,
+.about-fade-text li {
+    font-size: 22px;
+    line-height: 1.6;
+    transition-delay: 0.5s;
+}
+
+
+.about-fade-text.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+
+.about-fade-img {
+    opacity: 0;
+    transform: translateY(-55px) scale(0.99);
+    transition: opacity 0.55s cubic-bezier(0.33, 1, 0.68, 1),
+    transform 0.55s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: opacity, transform;
+}
+.about-fade-img.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+
+}
+
+#about #unit-models p,
+#about #unit-models li {
+    font-size: 20px !important;
+    line-height: 1.55 !important;
+}
+/* Алтлаг heading (about-heading-gold) */
+#about .about-heading-gold {
+    font-size: clamp(2.2rem, 4.6vw, 3rem);
+    line-height: 1.25;
+}
+
+/* 4-р хэсэг (цагаан дээр гардаг гарчиг) */
+#about .about4-title {
+    font-size: clamp(2.3rem, 4.8vw, 3.2rem);
+}
+/* === UNIT FONT OVERRIDE === */
+
+/* About #5 хэсгийн текстийн хэмжээ */
+#about-5 p{
+    font-size: 22px;
+    line-height: 1.7;
+}
+#about-5 li{
+    font-size: 18px;
+    line-height: 1.7;
+}
+.project-body p {
+    font-size: 22px;
+    line-height: 1.7;
+    opacity: 0.85;
+}.project-body li {
+     font-size:20px;
+ }
+/* --- Зөвхөн about-section доторхи текстүүдэд хамаарна --- */
+.about-section h2 {
+    font-size: clamp(2.6rem, 5vw, 3.4rem);
+    font-weight: 800;
+    text-align: left;
+    line-height: 1.2;
+    color: #0C6B73;
+    margin-bottom: var(--about-title-mb)
+}
+
+.about-section p,
+.about-section li {
+    font-size: clamp(1.1rem, 1.4vw + 0.5rem, 1.45rem);
+    line-height: 1.8;
+    opacity: 0.92;
+    text-align: justify;
+    max-width: 65ch;
+    margin-inline: auto;
+}
+
+/* Гарчиг ба текстийн хоорондын зай */
+.about-section .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--about-list-gap)
+}
+
+/* Mobile дээр бага зэрэг жижигрүүлнэ */
+@media (max-width: 768px){
+    .about-section h2 {
+        font-size: clamp(2rem, 6vw, 2.4rem);
+        text-align: left;
+    }
+    .about-section p,
+    .about-section li {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        line-height: 1.75;
+        text-align: left;
+    }
+}
+/* --- Шаргал гялалзсан гарчиг --- */
+.golden-title {
+    font-weight: 800;
+    background: linear-gradient(
+            120deg,
+            #f8d77d 0%,    /* тод шар алт */
+            #e6b347 25%,   /* гүн алтлаг */
+            #fff3c1 50%,   /* цагаан алт туяа */
+            #e6b347 75%,   /* дахин алт */
+            #f8d77d 100%   /* зөөлөн шар төгсгөл */
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shineMove 30s linear ;
+    text-shadow: 0 0 12px rgba(255,220,130,0.25);
+}
+
+@keyframes shineMove {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+.about4-bg, .about4-overlay { z-index: 0; }
