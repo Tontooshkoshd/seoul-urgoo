@@ -1,11 +1,13 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap&subset=cyrillic');
+
 
 
 /* ===== ROOT SETTINGS ===== */
 :root {
     --header-h: 72px;
-    --font-heading: 'Manrope', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    --font-body: 'Noto Sans', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --font-heading: 'Noto Sans', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --font-body: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     --about-pad-y: clamp(56px, 8vh, 96px);   /* секц бүрийн дээд/доод зай */
     --about-gap: clamp(20px, 3vw, 36px);     /* текст ↔ зураг хоорондын зай */
     --about-title-mb: 1.2rem;                /* гарчиг доорх зай */
@@ -17,7 +19,7 @@ body {
 }
 h1, h2, h3 {
     font-family: var(--font-heading);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
 }
 p, li, a, span, button {
     font-family: var(--font-body);
@@ -345,10 +347,10 @@ header.nav-collapsed {
 
 .about-section .about-image img{
     width: 100%;
-    height: 60vh;                  /* эсвэл 50vh / 520px гэх мэт */
+    height: 60vh;
     object-fit: cover;
-    object-position: center;       /* фокус — төв (дараах modifier-уудаар өөрчилнө) */
-    border-radius: 2;   /* Tailwind-ийн rounded-ыг дарна */
+    object-position: center;
+    border-radius: 3px;
     box-shadow: 0 25px 60px -10px rgba(0,0,0,0.35);
     display: block;
     transition: transform .6s ease, box-shadow .6s ease;
@@ -762,11 +764,15 @@ header.nav-collapsed {
             #e6b347 75%,   /* дахин алт */
             #f8d77d 100%   /* зөөлөн шар төгсгөл */
     );
+    letter-spacing: 0.02em;
     background-size: 300% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shineMove 30s linear ;
     text-shadow: 0 0 12px rgba(255,220,130,0.25);
+}
+.blue-title{
+    letter-spacing: 0.02em;
 }
 
 @keyframes shineMove {
@@ -775,3 +781,11 @@ header.nav-collapsed {
 }
 
 .about4-bg, .about4-overlay { z-index: 0; }
+.about-heading,
+.about-heading-gold,
+.blue-title,
+.golden-title {
+    font-feature-settings: "kern", "liga";
+    transform: scaleY(1.05); /* босоо хэмжээг 5% өсгөнө */
+    letter-spacing: 0.01em;
+}
