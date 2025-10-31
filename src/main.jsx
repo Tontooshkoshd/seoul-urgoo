@@ -9,12 +9,14 @@ import {About} from "./components/About.jsx";
 import Apartments from "./components/Apartments.jsx";
 import ApartmentDetail from "./components/ApartmentDetail.jsx";
 import ScrollToHash from "./components/ScrollToHash";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
+
 
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
+             <SpeedInsights />
             <Navbar/>
             <ScrollToHash/>
             <Routes>
